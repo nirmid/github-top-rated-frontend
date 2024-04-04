@@ -5,20 +5,8 @@ import { Table, Button } from "antd";
 import { difference } from "lodash";
 import BarChartComponent from "./barChart";
 import type { ColumnsType } from "antd/es/table";
-
-// import { RepoData } from "../types/RepoData";
-
-const serverUrl = "http://localhost:4000";
-const clientUrl = "http://localhost:3000";
-
-type RepoData = {
-  fullName: string;
-  language: string;
-  stars: number;
-  description: string;
-  link: string;
-  repoId: number;
-};
+import { RepoData } from "../types/RepoData";
+import { serverUrl, clientUrl } from "../util/constants";
 
 const MostStarsTable: React.FC = () => {
   const authHeader = useAuthHeader() || "";

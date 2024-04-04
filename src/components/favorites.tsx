@@ -5,22 +5,12 @@ import { Table, Button } from "antd";
 import { difference } from "lodash";
 import type { ColumnsType } from "antd/es/table";
 import BarChartComponent from "./barChart";
-
-export interface DataRow {
-  fullName: string;
-  language: string;
-  stars: number;
-  description: string;
-  link: string;
-  repoId: number;
-}
-
-const serverUrl = "http://localhost:4000";
-const clientUrl = "http://localhost:3000";
+import { RepoData } from "../types/RepoData";
+import { serverUrl, clientUrl } from "../util/constants";
 
 const MostStarsTable: React.FC = () => {
   const authHeader = useAuthHeader() || "";
-  const [dataSource, setDataSource] = useState<DataRow[]>([]);
+  const [dataSource, setDataSource] = useState<RepoData[]>([]);
   const [totalItems, setTotalItems] = useState(1);
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
 
@@ -39,7 +29,7 @@ const MostStarsTable: React.FC = () => {
     setSelectedRows([]);
   };
 
-  const updateFavorites = async (repos: DataRow[]) => {
+  const updateFavorites = async (repos: RepoData[]) => {
     try {
       const response = await axios.put(
         `${serverUrl}/user/removeFavorites`,
@@ -66,7 +56,7 @@ const MostStarsTable: React.FC = () => {
           Authenticator: authHeader,
         },
       });
-      const repos: DataRow[] = response.data.map((repo: any) => ({
+      const repos: RepoData[] = response.data.map((repo: any) => ({
         fullName: repo.fullName,
         language: repo.language,
         stars: repo.stars,

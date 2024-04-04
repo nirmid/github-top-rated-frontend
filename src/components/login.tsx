@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import { serverUrl, clientUrl } from "../util/constants";
 
 const Login: React.FC = () => {
-  const serverUrl = "http://localhost:4000";
-  const clientUrl = "http://localhost:3000";
   const signIn = useSignIn();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { serverUrl, clientUrl } from "../util/constants";
 
 const Signup: React.FC = () => {
-  const serverUrl = "http://localhost:4000";
-  const clientUrl = "http://localhost:3000";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
