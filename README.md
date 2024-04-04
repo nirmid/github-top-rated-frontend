@@ -24,4 +24,5 @@ The app implements pagination, each page will be fetched from the server.
 
 1. Adding more graphs and insights.
 2. Ability to click on certain repo and see more details about it
-3. Further error handling
+3. Further error
+4. Improving UI/UX
