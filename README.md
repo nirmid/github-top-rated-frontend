@@ -1,9 +1,10 @@
 # Project Name
 
-    Github top rated web app - Frontened
+Github top rated web app - Frontened
 
 ## Getting Started
 
+Inside src/util/constants define server and client url.
+
     Run npm i
-    Inside src/util/constants define server and client url.
     Run npm start
