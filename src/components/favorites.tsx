@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { Table, Button } from "antd";
+import { difference } from "lodash";
+import type { ColumnsType } from "antd/es/table";
+import BarChartComponent from "./barChart";
 
 export interface DataRow {
   fullName: string;
-  language: string | null;
+  language: string;
   stars: number;
   description: string;
   link: string;
@@ -13,6 +16,7 @@ export interface DataRow {
 }
 
 const serverUrl = "http://localhost:4000";
+const clientUrl = "http://localhost:3000";
 
 const MostStarsTable: React.FC = () => {
   const authHeader = useAuthHeader() || "";
@@ -30,6 +34,9 @@ const MostStarsTable: React.FC = () => {
       return dataSource[row];
     });
     updateFavorites(repos);
+    const newDataSource = difference(dataSource, repos);
+    setDataSource(newDataSource);
+    setSelectedRows([]);
   };
 
   const updateFavorites = async (repos: DataRow[]) => {
@@ -76,10 +83,16 @@ const MostStarsTable: React.FC = () => {
     }
   };
 
-  const columns = [
+  const columns: ColumnsType = [
     { title: "Full Name", dataIndex: "fullName", key: "fullName" },
     { title: "Language", dataIndex: "language", key: "language" },
-    { title: "Stars", dataIndex: "stars", key: "stars" },
+    {
+      title: "Stars",
+      dataIndex: "stars",
+      key: "stars",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.stars - b.stars,
+    },
     { title: "Description", dataIndex: "description", key: "description" },
     { title: "Link", dataIndex: "link", key: "link" },
     { title: "Repo Id", dataIndex: "repoId", key: "repoId" },
@@ -99,6 +112,7 @@ const MostStarsTable: React.FC = () => {
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
+        <a href={`${clientUrl}/getMostStarred`}>Go to Most Starred</a>
         <Button type="primary" onClick={handleClick} disabled={!hasSelected}>
           Remove as Favorite
         </Button>
@@ -122,6 +136,7 @@ const MostStarsTable: React.FC = () => {
           showSizeChanger: false,
         }}
       ></Table>
+      <BarChartComponent repos={dataSource} />
     </div>
   );
 };

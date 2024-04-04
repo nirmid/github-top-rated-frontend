@@ -2,21 +2,27 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { Table, Button } from "antd";
+import { difference } from "lodash";
+import BarChartComponent from "./barChart";
+import type { ColumnsType } from "antd/es/table";
 
-export interface DataRow {
+// import { RepoData } from "../types/RepoData";
+
+const serverUrl = "http://localhost:4000";
+const clientUrl = "http://localhost:3000";
+
+type RepoData = {
   fullName: string;
-  language: string | null;
+  language: string;
   stars: number;
   description: string;
   link: string;
   repoId: number;
-}
-
-const serverUrl = "http://localhost:4000";
+};
 
 const MostStarsTable: React.FC = () => {
   const authHeader = useAuthHeader() || "";
-  const [dataSource, setDataSource] = useState<DataRow[]>([]);
+  const [dataSource, setDataSource] = useState<RepoData[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
 
@@ -30,9 +36,12 @@ const MostStarsTable: React.FC = () => {
       return dataSource[row];
     });
     updateFavorites(repos);
+    const newDataSource = difference(dataSource, repos);
+    setDataSource(newDataSource);
+    setSelectedRows([]);
   };
 
-  const updateFavorites = async (repos: DataRow[]) => {
+  const updateFavorites = async (repos: RepoData[]) => {
     try {
       const response = await axios.post(
         `${serverUrl}/user/updateFavorites`,
@@ -62,7 +71,7 @@ const MostStarsTable: React.FC = () => {
           page,
         },
       });
-      const repos: DataRow[] = response.data.repoData.map((repo: any) => ({
+      const repos: RepoData[] = response.data.repoData.map((repo: any) => ({
         fullName: repo.fullName,
         language: repo.language,
         stars: repo.stars,
@@ -79,10 +88,21 @@ const MostStarsTable: React.FC = () => {
     }
   };
 
-  const columns = [
+  const columns: ColumnsType<RepoData> = [
     { title: "Full Name", dataIndex: "fullName", key: "fullName" },
-    { title: "Language", dataIndex: "language", key: "language" },
-    { title: "Stars", dataIndex: "stars", key: "stars" },
+    {
+      title: "Language",
+      dataIndex: "language",
+      key: "language",
+    },
+
+    {
+      title: "Stars",
+      dataIndex: "stars",
+      key: "stars",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.stars - b.stars,
+    },
     { title: "Description", dataIndex: "description", key: "description" },
     { title: "Link", dataIndex: "link", key: "link" },
     { title: "Repo Id", dataIndex: "repoId", key: "repoId" },
@@ -102,6 +122,7 @@ const MostStarsTable: React.FC = () => {
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
+        <a href={`${clientUrl}/getFavorites`}>Go to favorites</a>
         <Button type="primary" onClick={handleClick} disabled={!hasSelected}>
           Save as Favorite
         </Button>
@@ -128,6 +149,7 @@ const MostStarsTable: React.FC = () => {
           },
         }}
       ></Table>
+      <BarChartComponent repos={dataSource} />
     </div>
   );
 };
