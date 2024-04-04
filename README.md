@@ -22,7 +22,8 @@ The app implements pagination, each page will be fetched from the server.
 
 ### Further steps
 
-1. Adding more graphs and insights.
-2. Ability to click on certain repo and see more details about it
-3. Further error
-4. Improving UI/UX
+1. Adding filtering options to the tables.
+2. Adding more graphs and insights.
+3. Ability to click on certain repo and see more details about it.
+4. Further error.
+5. Improving UI/UX.
