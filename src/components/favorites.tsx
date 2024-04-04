@@ -59,7 +59,7 @@ const MostStarsTable: React.FC = () => {
           Authenticator: authHeader,
         },
       });
-      const repos: DataRow[] = response.data.repoData.map((repo: any) => ({
+      const repos: DataRow[] = response.data.map((repo: any) => ({
         fullName: repo.fullName,
         language: repo.language,
         stars: repo.stars,
@@ -100,7 +100,7 @@ const MostStarsTable: React.FC = () => {
     <div>
       <div style={{ marginBottom: 16 }}>
         <Button type="primary" onClick={handleClick} disabled={!hasSelected}>
-          Save as Favorite
+          Remove as Favorite
         </Button>
         <span style={{ marginLeft: 8 }}>
           {hasSelected ? `Selected ${selectedRows.length} items` : ""}
@@ -117,8 +117,9 @@ const MostStarsTable: React.FC = () => {
         columns={columns}
         dataSource={dataSource.map((item, index) => ({ ...item, key: index }))}
         pagination={{
-          pageSize: 10,
+          pageSize: 30,
           total: totalItems,
+          showSizeChanger: false,
         }}
       ></Table>
     </div>

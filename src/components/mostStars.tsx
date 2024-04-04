@@ -122,6 +122,7 @@ const MostStarsTable: React.FC = () => {
         pagination={{
           pageSize: 10,
           total: totalPages * 30,
+          showSizeChanger: false,
           onChange: (page) => {
             GetMostStarred(page);
           },
