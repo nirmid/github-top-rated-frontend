@@ -38,7 +38,7 @@ const MostStarsTable: React.FC = () => {
         },
         {
           headers: {
-            Authenticator: authHeader,
+            Authorization: authHeader,
           },
         }
       );
@@ -53,7 +53,7 @@ const MostStarsTable: React.FC = () => {
     try {
       const response = await axios.get(`${serverUrl}/user/getFavorites`, {
         headers: {
-          Authenticator: authHeader,
+          Authorization: authHeader,
         },
       });
       const repos: RepoData[] = response.data.map((repo: any) => ({
