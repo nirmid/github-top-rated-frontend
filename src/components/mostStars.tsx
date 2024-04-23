@@ -129,8 +129,8 @@ const MostStarsTable: React.FC = () => {
         columns={columns}
         dataSource={dataSource.map((item, index) => ({ ...item, key: index }))}
         pagination={{
-          pageSize: 10,
-          total: totalPages * 30,
+          pageSize: 30,
+          total: 30 * totalPages,
           showSizeChanger: false,
           onChange: (page) => {
             GetMostStarred(page);
