@@ -75,7 +75,55 @@ const MostStarsTable: React.FC = () => {
 
   const columns: ColumnsType = [
     { title: "Full Name", dataIndex: "fullName", key: "fullName" },
-    { title: "Language", dataIndex: "language", key: "language" },
+    {
+      title: "Language",
+      dataIndex: "language",
+      key: "language",
+      filters: [
+        {
+          text: "TypeScript",
+          value: "TypeScript",
+        },
+        {
+          text: "JavaScript",
+          value: "JavaScript",
+        },
+        {
+          text: "Java",
+          value: "Java",
+        },
+        {
+          text: "Python",
+          value: "Python",
+        },
+        {
+          text: "C",
+          value: "C",
+        },
+        {
+          text: "C++",
+          value: "C++",
+        },
+        {
+          text: "Go",
+          value: "Go",
+        },
+        {
+          text: "Swift",
+          value: "Swift",
+        },
+        {
+          text: "PHP",
+          value: "PHP",
+        },
+        {
+          text: "Rust",
+          value: "Rust",
+        },
+      ],
+      onFilter: (value, record) =>
+        record.language.indexOf(value as string) === 0,
+    },
     {
       title: "Stars",
       dataIndex: "stars",
