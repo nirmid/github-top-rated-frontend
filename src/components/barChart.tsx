@@ -23,8 +23,6 @@ interface BarChartComponentProps {
 }
 
 const BarChartComponent: React.FC<BarChartComponentProps> = ({ repos }) => {
-  console.log(repos);
-  console.log(typeof repos);
   if (Array.isArray(repos) === false)
     return (
       <div>
