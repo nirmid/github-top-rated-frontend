@@ -38,7 +38,7 @@ const MostStarsTable: React.FC = () => {
         },
         {
           headers: {
-            Authenticator: authHeader,
+            Authorization: authHeader,
           },
         }
       );
@@ -53,7 +53,7 @@ const MostStarsTable: React.FC = () => {
     try {
       const response = await axios.get(`${serverUrl}/user/getMostStarred`, {
         headers: {
-          Authenticator: authHeader,
+          Authorization: authHeader,
         },
         params: {
           page,
@@ -82,6 +82,50 @@ const MostStarsTable: React.FC = () => {
       title: "Language",
       dataIndex: "language",
       key: "language",
+      filters: [
+        {
+          text: "TypeScript",
+          value: "TypeScript",
+        },
+        {
+          text: "JavaScript",
+          value: "JavaScript",
+        },
+        {
+          text: "Java",
+          value: "Java",
+        },
+        {
+          text: "Python",
+          value: "Python",
+        },
+        {
+          text: "C",
+          value: "C",
+        },
+        {
+          text: "C++",
+          value: "C++",
+        },
+        {
+          text: "Go",
+          value: "Go",
+        },
+        {
+          text: "Swift",
+          value: "Swift",
+        },
+        {
+          text: "PHP",
+          value: "PHP",
+        },
+        {
+          text: "Rust",
+          value: "Rust",
+        },
+      ],
+      onFilter: (value, record) =>
+        record.language.indexOf(value as string) === 0,
     },
 
     {
